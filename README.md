@@ -1,5 +1,6 @@
 # Changes 
-The memmem changes fix the issues where frida looks for AUXV from the wrong location when run with afl-frida-trace by implementing a static memmem and downgrading frida-gum to 16.3.0:
+The memmem changes fix the issues where frida looks for AUXV from the bottom of the stack which causes asan issues when run with afl-frida-trace by implementing a static memmem and downgrading frida-gum to 16.3.0:
+
 Address 0x008000000000 is a wild pointer inside of access range of size 0x000000021000.
 SUMMARY: AddressSanitizer: unknown-crash (/data/local/tmp/fasan/libclang_rt.asan-aarch64-android.so+0x7e39c) (BuildId: 1a99d2d2b43648db69abf23476a24d458d41ad00)
 ==10021==ABORTING
