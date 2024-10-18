@@ -1,3 +1,29 @@
+# Changes 
+The memmem changes fix the issues where frida looks for AUXV from the wrong location when run with afl-frida-trace by implementing a static memmem and downgrading frida-gum to 16.3.0:
+Address 0x008000000000 is a wild pointer inside of access range of size 0x000000021000.
+SUMMARY: AddressSanitizer: unknown-crash (/data/local/tmp/fasan/libclang_rt.asan-aarch64-android.so+0x7e39c) (BuildId: 1a99d2d2b43648db69abf23476a24d458d41ad00)
+==10021==ABORTING
+
+# Compiling afl-fuzz/afl-frida-trace and frida-gum devkit
+
+First compile the frida-gumjs devkit from the frida root directory
+
+git clone https://github.com/craftysecurity/frida.git
+make clean
+./configure --host=android-arm64 -- \
+    -Dfrida-gum:devkits=gum,gumjs \
+    -Dfrida-core:devkits=core
+make
+
+CMakeLists.txt to compile afl-fuzz and afl-frida-trace 
+https://gist.github.com/craftysecurity/29f6f78d5368246542bda572dd405242
+
+mkdir build && cd build
+cmake -DANDROID_PLATFORM=34 \
+        -DCMAKE_TOOLCHAIN_FILE=/opt/android-ndk-r25c/build/cmake/android.toolchain.cmake \
+        -DANDROID_ABI=arm64-v8a ..
+make
+
 # Frida
 
 Dynamic instrumentation toolkit for developers, reverse-engineers, and security
