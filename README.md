@@ -16,6 +16,9 @@ make clean
     -Dfrida-core:devkits=core
 make
 
+Clone aflplusplus 4.0.6
+git clone https://github.com/craftysecurity/AFLplusplus/tree/stable
+
 CMakeLists.txt to compile afl-fuzz and afl-frida-trace 
 https://gist.github.com/craftysecurity/29f6f78d5368246542bda572dd405242
 
